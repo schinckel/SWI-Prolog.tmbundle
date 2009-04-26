@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#! /usr/bin/env ruby
+
+require ENV["TM_SUPPORT_PATH"] + "/lib/tm/executor"
+
+command = [ENV["TM_PROLOG"] || "swipl", "-s", ENV["TM_FILEPATH"]]
+two_line = false
+
+welcome = /^(Welcome to SWI-Prolog)|(Copyright )|(SWI-Prolog comes with)|(and you are welcome)|(Please visit)|(For help, use)/
+
+TextMate::Executor.run(command) do |str, type|
+  if type == :err
+    if two_line
+      two_line = false
+      # this line is part of the previous message
+      "#{str}&lt;/div&gt;"
+    # Is this a warning line?
+    elsif str =~ /(Warning):\s(.*):(\d+):/
+      warn, file, line = $1, $2, $3
+      filename = file.split('/')[-1]
+      two_line = true
+      file_link = "&lt;a class=\"near\" href=\"txmt://open?line=#{line}&amp;url=file://#{file}\"&gt;#{filename}&lt;/a&gt;"
+      "&lt;div class=\"#{warn}\"&gt;#{warn}: #{file_link}, line #{line}:"
+    elsif str =~ /(ERROR):\s(.*):(\d+):(\d+):\s(.*)/
+      file, line, char, message = $2, $3, $4, $5
+      filename = file.split('/')[-1]
+      file_link = "&lt;a class=\"near\" href=\"txmt://open?line=#{line}&amp;column=#{char}&amp;url=file://#{file}\"&gt;#{filename}&lt;/a&gt;"
+      "&lt;div class=\"err\"&gt;ERROR: #{file_link}, line #{line}, col #{char}: #{message}&lt;/div&gt;"
+    elsif str =~ /ERROR:\s(.*)/
+      message = $1
+      "&lt;div class=\"test fail\"&gt;ERROR: #{message}&lt;/div&gt;"
+    elsif str =~ /%\s(.*)\scompiled\s(.*)\ssec,\s(.*)\sbytes/
+      file, time, length = $1, $2, $3
+      filename = file.split('/')[-1]
+      file_link = "&lt;a class=\"near\" href=\"txmt://open?url=file://#{file}\"&gt;#{filename}&lt;/a&gt;"
+      "&lt;div class=\"test ok\"&gt; #{file_link} (#{length} bytes) compiled in #{time} sec.&lt;/div&gt;"
+    elsif str =~ welcome
+      "&lt;span class=\"copyright\" style=\"font-size:xx-small;\"&gt;#{str}&lt;/span&gt; "
+    else
+      "&lt;div class=\"output\"&gt;#{str}&lt;/div&gt;"
+    end
+  else
+    "&lt;div class=\"output\"&gt;#{str}&lt;/div&gt;"
+  end
+end</string>
+	<key>input</key>
+	<string>none</string>
+	<key>keyEquivalent</key>
+	<string>@r</string>
+	<key>name</key>
+	<string>Run</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.prolog</string>
+	<key>uuid</key>
+	<string>EEDEA01C-9A0E-4B6E-92B0-F3AF5716140F</string>
+</dict>
+</plist>

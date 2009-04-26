@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>SWI-Prolog</string>
+	<key>ordering</key>
+	<array>
+		<string>8F6F5A72-EB1A-4774-8053-37715C925860</string>
+		<string>C561A7C7-8302-421D-991B-3F8236622E39</string>
+		<string>12A91710-482B-4E10-9C5A-40A61F86BEB2</string>
+		<string>EEDEA01C-9A0E-4B6E-92B0-F3AF5716140F</string>
+	</array>
+	<key>uuid</key>
+	<string>B382F157-5671-44DF-94BC-E9A973615CC3</string>
+</dict>
+</plist>

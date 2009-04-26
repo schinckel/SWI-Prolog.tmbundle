@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>name</key>
+	<string>Symbols List</string>
+	<key>scope</key>
+	<string>meta.fact.basic.prolog, meta.fact.prolog, meta.rule.signature.prolog</string>
+	<key>settings</key>
+	<dict>
+		<key>showInSymbolList</key>
+		<integer>1</integer>
+	</dict>
+	<key>uuid</key>
+	<string>C561A7C7-8302-421D-991B-3F8236622E39</string>
+</dict>
+</plist>
